@@ -1,0 +1,16 @@
+name: "deeplocalizer_{{name_suffix}}"
+
+input: "data"
+input_dim: 256
+input_dim: 1
+input_dim: 100
+input_dim: 100
+
+{% include 'network_definition.prototxt' %}
+
+layer {
+  name: "prob"
+  type: "Softmax"
+  bottom: "fc4"
+  top: "prob"
+}

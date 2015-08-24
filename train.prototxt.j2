@@ -1,0 +1,48 @@
+name: "Deeplocalizer"
+layer {
+  name: "data"
+  type: "DummyData"
+  top: "data"
+  top: "label"
+  dummy_data_param {
+    shape {
+      dim: 1
+      dim: 1
+      dim: 60
+      dim: 60
+    }
+    data_filler {
+      type: "gaussian"
+    }
+    shape {
+      dim: 1
+      dim: 1
+      dim: 1
+      dim: 1
+    }
+    data_filler {
+      type: "constant"
+      value: 1
+    }
+  }
+}
+
+{% include 'network_definition.prototxt' %}
+
+layer {
+  name: "accuracy"
+  type: "Accuracy"
+  bottom: "fc4"
+  bottom: "label"
+  top: "accuracy"
+  include {
+    phase: TEST
+  }
+}
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "fc4"
+  bottom: "label"
+  top: "loss"
+}
